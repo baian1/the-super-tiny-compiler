@@ -29,7 +29,7 @@ export type Tokens = Array<ParenCToken | NumberCToken | NameCToken>;
  *     { type: 'paren',  value: ')'        },
  * ]
  */
-function tokenizer(code: string) {
+export function tokenizer(code: string) {
   const tokens: Tokens = [];
   for (let count = 0; count < code.length; ) {
     let char = code[count];
@@ -73,5 +73,3 @@ function tokenizer(code: string) {
   }
   return tokens;
 }
-
-tokenizer("(add 2 (subtract 4 2))");
