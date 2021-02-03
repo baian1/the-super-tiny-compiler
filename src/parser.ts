@@ -2,6 +2,7 @@
  * [{ type: 'paren', value: '(' }, ...]   =>   { type: 'Program', body: [...] }
  */
 
+import { ProgramNode, CallExpressionNode, NumberLiteralNode } from "./type";
 import { tokenizer, Tokens } from "./tokenizer";
 
 /**
@@ -27,13 +28,13 @@ import { tokenizer, Tokens } from "./tokenizer";
  *   }]
  * }
  */
-function parser(tokens: Tokens) {
-  let ast = {
-    type: "Pargram",
+function parser(tokens: Tokens): ProgramNode {
+  let ast: ProgramNode = {
+    type: "Program",
     body: [],
   };
   let current = 0;
-  function walk() {
+  function walk(): CallExpressionNode | NumberLiteralNode {
     let token = tokens[current];
     if (token.type === "number") {
       current++;
@@ -46,7 +47,7 @@ function parser(tokens: Tokens) {
     //碰到括号,直接舍去,读取后一位的表达式
     if (token.type === "paren" && token.value === "(") {
       token = tokens[++current];
-      let node = {
+      let node: CallExpressionNode = {
         type: "CallExpression",
         name: token.value,
         params: [],

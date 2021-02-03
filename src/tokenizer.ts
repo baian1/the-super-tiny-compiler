@@ -1,16 +1,4 @@
-interface CToken {
-  type: string;
-  value: string;
-}
-interface ParenCToken extends CToken {
-  type: "paren";
-}
-interface NumberCToken extends CToken {
-  type: "number";
-}
-interface NameCToken extends CToken {
-  type: "name";
-}
+import { ParenCToken, NumberCToken, NameCToken } from "./type";
 
 export type Tokens = Array<ParenCToken | NumberCToken | NameCToken>;
 /**
