@@ -40,6 +40,41 @@ type ASTFN<P, T = undefined> = Partial<
 
 export interface ASTTraverseFn {
   Program?: ASTFN<ProgramNode, null>;
-  CallExpression?: ASTFN<CallExpressionNode, ProgramNode>;
+  CallExpression?: ASTFN<CallExpressionNode, ProgramNode | CallExpressionNode>;
   NumberLiteral?: ASTFN<NumberLiteralNode, CallExpressionNode>;
 }
+
+/**
+ * out AST
+ */
+export interface CProgramNode {
+  type: "Program";
+  body: CExpressionStatementNode[];
+}
+
+export interface CExpressionStatementNode {
+  type: "ExpressionStatement";
+  expression: CCallExpressionNode;
+}
+
+export interface CCallExpressionNode {
+  type: "CallExpression";
+  callee: CIdentifierNode;
+  arguments: (CNumberLiteralNode | CCallExpressionNode)[];
+}
+
+export interface CNumberLiteralNode {
+  type: "NumberLiteral";
+  value: string;
+}
+export interface CIdentifierNode {
+  type: "Identifier";
+  name: string;
+}
+
+export type CASTNodes =
+  | CProgramNode
+  | CExpressionStatementNode
+  | CCallExpressionNode
+  | CNumberLiteralNode
+  | CIdentifierNode;
